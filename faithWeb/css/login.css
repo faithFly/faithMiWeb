@@ -1,0 +1,227 @@
+*{
+    margin: 0;
+    padding: 0;
+    
+}
+a{
+    text-decoration: none;
+}
+.body_index{
+    display: flex;
+    justify-content: space-between;
+    height: 100vh;
+}
+.left_bg{
+flex: 2;
+height: 100%;
+background-image: url(../img/left_bg.jpg);
+background-size:cover ;
+background-position: 50%;
+}
+.right_con{
+height: 100%;
+flex: 8;
+background-color: rgb(255, 255, 255);
+}
+.logo{
+    width: 300px;
+    height:75px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logo_title{
+ width: 77%;
+ height: 100%;
+line-height: 75px;
+
+}
+.logo_title a{
+   position: relative;
+   top: -14px;
+ font-size: 25px;
+ font-weight: bold;
+ font-family:Verdana, Geneva, Tahoma, sans-serif
+} 
+.log_img{
+    width: 13%;
+    height: 68%;
+    float: left;
+    background-image: url(../img/logo.jpg);
+    background-size: 100% 100%;
+}
+.login_con{
+    -webkit-box-shadow: #666 0px 0px 10px; 
+   -moz-box-shadow: #666 0px 0px 10px; 
+   box-shadow: #666 0px 0px 10px; 
+    width: 500px;
+    height: 670px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    top: 120px;
+}
+.btn_change {
+    width: 270px;
+    height: 56px;
+    margin-left: 50px;
+}
+.btn_change button{
+    font-size: 25px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    width: 100px;
+    height: 44px;
+    border: 0;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
+}
+.right_btn{
+    margin-left: 10px;
+}
+.sign_in{
+    width: 400px;
+    height: 550px;
+    margin: 0 auto;
+    position: relative;
+    top: 10px;
+    display: block;
+}
+.sign_up{
+    width: 400px;
+    height: 550px;
+    margin: 0 auto;
+    position: relative;
+    top: 10px;
+   display: none;
+}
+.inp_user{
+    width: 400px;
+    height: 80px;
+    
+    background-color: rgb(249, 249, 249);
+    
+}
+.input_pwd{
+    width: 400px;
+    height: 80px;
+    background-color: rgb(249, 249, 249);
+   margin-top: 20px;
+}
+.inp_user a{
+    
+}
+.txt_click{
+    margin-left: 20px;
+    font-size: 20px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    color: grey;
+    line-height: 80px;
+    position: absolute;
+    background-color: transparent;
+    cursor: text    ;
+    transition: all .3s;
+    z-index: 10;
+}
+.txt_click2{
+    margin-left: 20px;
+    font-size: 20px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    color: grey;
+    line-height: 80px;
+    position: absolute;
+    background-color: transparent;
+    cursor: text    ;
+    transition: all .3s;
+    z-index: 12;
+}
+.txt_click3{
+    margin-left: 20px;
+    font-size: 20px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    color: grey;
+    line-height: 80px;
+    position: absolute;
+    background-color: transparent;
+    cursor: text    ;
+    transition: all .3s;
+    z-index: 12;
+}
+.user_size{
+    width: 380;
+    height: 58px;
+    border: none;
+    font-size: 25px;
+    position: absolute;
+    top: 22px;
+    margin-left: 20px;
+    background-color: transparent;
+    z-index: 99;
+}
+.user_size2{
+    width: 380;
+    height: 58px;
+    border: none;
+    font-size: 25px;
+    position: relative;
+    top: 22px;
+    margin-left: 20px;
+    background-color: transparent;
+    z-index: 98;
+}
+.user_size:focus {
+   outline: none;
+}
+.user_size2:focus {
+    outline: none;
+ }
+ .cb_div{
+    width: 400px;
+    height: 80px;
+   
+   margin-top: 20px;
+ }
+.cb_agree{
+    width: 18px;
+    height: 18px;
+    color: red;
+    
+}
+.txt_a{
+    font-size: 16px;
+   cursor: pointer;
+}
+#login_btn{
+    width: 400px;
+    height: 70px;
+    background-color: rgb(252, 109, 18);
+    border-radius: 20px;
+    font-size: 22px;
+    color: aliceblue;
+}
+#login_btn2{
+    margin-top: 30px;
+    width: 400px;
+    height: 70px;
+    background-color: rgb(252, 109, 18);
+    border-radius: 20px;
+    font-size: 22px;
+    color: aliceblue;
+}
+.login_mess{
+    width: 400px;
+    height: 50px;
+}
+.login_mess a{
+ margin-top: 20px;
+font-size: 17px;
+color: #FF5C00;
+cursor: pointer;
+}
+.left_a{
+    float: left;
+}
+.right_a{
+    float: right;
+}

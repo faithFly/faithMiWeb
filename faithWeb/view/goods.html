@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全部商品</title>
+            <!-- 引入 layui.css -->
+            <link rel="stylesheet" href="../css/layui.css">
+            <!-- 引入 layui.js -->
+            <script src="../js/layui.js"></script>
+            <link rel="stylesheet" href="../css/goods.css">
+            <script src="../js/jq1.10.2.js"></script>
+            <script>
+              layui.use('laypage', function(){
+                    var laypage = layui.laypage;
+                    
+                    //执行一个laypage实例
+                    laypage.render({
+                      elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+                      ,count: 50 //数据总数，从服务端得到
+                    });
+                  });
+              $(function(){
+                  //加载全部
+                  $.ajax({
+                    url: "http://localhost:5001/api/listMain/GetProductByCateName",
+                    type: "get",
+                    data:"cateName=全部",
+                    success: function (res) {
+                     for(let i of res){
+                         $(".layui-tab-content div:eq(0) ul").append(` <li>
+                          <img src="../${i.productPicture}" alt="">
+                          <h3>${i.productName}</h3>
+                          <p>${i.productTitle}</p>
+                          <span>${i.productPrice}元起</span>
+                        </li>`)
+                       }
+                     
+                    }, error: function (error) {
+                        console.log(error)
+                    }
+                });
+              
+                
+   //li点击事件
+   $(".title_height li").click(function(){
+                
+                  //获取li的下标
+                 var index=$(this).index();   
+                   //获取当前li的内容 
+                var title=$(".title_height li:eq('"+index+"')").text();  
+                 $.ajax({
+                    url: "http://localhost:5001/api/listMain/GetProductByCateName",
+                    type: "get",
+                    data:"cateName="+title,
+                    success: function (res) {
+                      //在对应的div中遍历
+                      //1.获取对应div的对象
+                     for(let i of res){
+                         $(".layui-tab-content div:eq('"+index+"') ul").append(` <li>
+                          <img src="../${i.productPicture}" alt="">
+                          <h3>${i.productName}</h3>
+                          <p>${i.productTitle}</p>
+                          <span>${i.productPrice}元起</span>
+                        </li>`)
+                       }
+                     
+                    }, error: function (error) {
+                        console.log(error)
+                    }
+                });
+                });
+              })
+             
+            </script>
+</head>
+<body>
+  <div>
+    <div class="boxMax">
+      <!-- 顶部 -->
+      <div class="topbar">
+        <div class="topbar_nav">
+          <div class="topbar_left">
+            <a href="">小米商城</a>  
+            <span class="sep">|</span>
+            <a href="">MIUI</a>  
+            <span class="sep">|</span>
+            <a href="">loT</a>  
+            <span class="sep">|</span>
+            <a href="">云服务</a>  
+            <span class="sep">|</span>
+            <a href="">天星数科</a>  
+            <span class="sep">|</span>
+            <a href="">有品</a>  
+            <span class="sep">|</span>
+            <a href="">小爱开放平台</a>  
+          </div>
+          <div class="topbar_user" id="topbar_changeA">
+           
+            <a href="../view/login.html">登录</a>  
+    
+            <span class="sep">|</span>
+    
+            <a href="../view/login.html">注册</a>
+            <a></a>
+            <span class="sep">|</span>
+    
+            <a href="">消息通知</a>
+    
+            <em class="shopping_a">
+            <em class="icon_shop"></em>
+            <em class="icon_txt">购物车</em>
+            </em>
+          </div>
+           </div>
+           
+    </div>
+    <!-- 搜索框栏目 -->
+    <div class="search_nav">
+      <div class="search_con">
+        <img src="../img/logo.jpg" width="110" height="100">
+        <ul>
+          <li><a>首页</a> </li>
+          <li><a>全部商品</a> </li>
+          <li><a>关于我们</a> </li>
+        </ul>
+        
+      
+        <div class="search_right">
+        
+        <input type="text" name="search" id="txt_search" placeholder="请输入你要查找的商品">
+        <button class="search_btn">搜索</button>
+        
+        </div>
+        </div>
+          
+        </div>
+      </div>
+    </div>
+    <div class="goods_main">
+        <div class="goodstitle">
+          <a href="" class="a_title"> 首页</a><a>>  全部商品 > 分类</a>
+         </div>
+        <div class="layui-tab lay_flex">
+         <ul class="layui-tab-title title_height">
+            <li class="layui-this">全部</li>
+            <li>手机</li>
+            <li>电视机</li>
+            <li>空调</li>
+            <li>洗衣机</li>
+            <li>保护套</li>
+            <li>保护膜</li>
+            <li>充电器</li>
+            <li>充电宝</li>
+          </ul>
+          <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show con_list"> <ul class="samll_pro"></ul></div>
+            <div class="layui-tab-item con_list"><ul class="samll_pro"></ul></div>
+            <div class="layui-tab-item con_list"><ul class="samll_pro"></ul></div>
+            <div class="layui-tab-item con_list"><ul class="samll_pro"></ul></div>
+            <div class="layui-tab-item con_list"><ul class="samll_pro"></ul></div>
+            <div class="layui-tab-item con_list"><ul class="samll_pro"></ul></div>
+            <div class="layui-tab-item con_list"><ul class="samll_pro"></ul></div>
+            <div class="layui-tab-item con_list"><ul class="samll_pro"></ul></div>
+            <div class="layui-tab-item con_list"><ul class="samll_pro"></ul></div>
+          </div>
+           <div id="test1"></div>
+        </div>
+       
+    </div>
+        <div class="main_bottom">
+   <a>商城版权所有归faith说了算嘿嘿</a>
+        </div>
+  </div>
+</div>
+
+</body>
+</html>

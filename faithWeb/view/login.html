@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Account</title>
+    <link rel="stylesheet" href="../css/login.css">
+    <!-- <script src="../js/login.js"></script> -->
+    <script src="../js/jq1.10.2.js"></script>
+    <script src="../js/login.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body class="body_index">
+    <div class="left_bg"></div>
+    <div class="right_con">
+        <!-- logo -->
+        <div class="logo">
+            <div class="log_img"></div>
+            <div class="logo_title"><a>MI Accoun</a></div>
+        </div>
+        <!-- 登录注册模块 -->
+        <div class="login_con">
+            <!-- sign in 和sign up -->
+            <div class="btn_change">
+                <button id="btn_login">Sign in</button>
+                <button id="right_btn" class="right_btn">Sign up</button>
+            </div>
+            <!-- 登录模块 -->
+            <div class="sign_in" id="login_d">
+                <div class="inp_user">
+                    <label class="txt_click">Email/Phone/Mi Account</label>
+                    <input type="text" id="userName" class="user_size" onclick="userClick(1)" onblur="userBlur(1)">
+                </div>
+                <div class="input_pwd">
+                    <label class="txt_click2">Password</label>
+                    <input type="password" id="userpwd" class="user_size2" onclick="userClick(2)" onblur="userBlur(2)">
+                </div>
+                <!-- 阅读条款 -->
+                <div class="cb_div">
+                    <input type="checkbox" name="agree" class="cb_agree" id="cb_login">
+                    <a class="txt_a">I've read and agreed to Xiaomi's User Agreement and Privacy Policy.</a>
+                </div>
+                <!-- 登录按钮 -->
+                <button type="button" class="btn btn-default" id="login_btn">Sign In</button>
+                <div class="login_mess">
+                    <a class="left_a">Forgot password?</a>
+                    <a class="right_a">Sign in using phone number</a>
+                </div>
+            </div>
+            <!-- 注册模块 -->
+            <div class="sign_up" id="reg_d">
+                <div class="inp_user">
+                    <label class="txt_click">Email/Phone/Mi Account</label>
+                    <input type="text" id="reguserName" class="user_size" onclick="userClick(3)" onblur="userBlur(3)">
+                </div>
+
+                <div class="input_pwd">
+                    <label class="txt_click2">Password</label>
+                    <input type="password" id="reguserpwd" class="user_size2" onclick="userClick(4)"
+                        onblur="userBlur(4)">
+                </div>
+                <div class="input_pwd">
+                    <label class="txt_click3">RePassWord</label>
+                    <input type="password" id="regReUserPwd" class="user_size2" onclick="userClick(5)"
+                        onblur="userBlur(5)">
+                </div>
+                <!-- 阅读条款 -->
+                <div class="cb_div">
+                    <input type="checkbox" name="agree" class="cb_agree" id="cb_reg">
+                    <a class="txt_a">I've read and agreed to Xiaomi's User Agreement and Privacy Policy.</a>
+                </div>
+                <!-- 登录按钮 -->
+                <button type="button" class="btn btn-default" id="login_btn2">Sign Up</button>
+            </div>
+
+
+            
+        </div>
+        <script>
+            $(function(){
+            //设置选中 
+           // $('#cb_login').attr('checked', true);
+            });
+            
+            $("#login_btn").click(function () {
+                 //获取用户名密码
+                 var userName = $("#userName").val();
+                var userPwd = $("#userpwd").val();
+                var data = {
+                    "userName": userName,
+                    "password": userPwd
+                };
+                 //验证部分
+                if(userName==""||userPwd==""){
+                  alert("文本框不能为空！")
+                  return;
+                }
+
+               //判断同意协议单选框
+                var isChecked = $('#cb_login').is(":checked");
+                if (isChecked)  {
+                    // 同意协议提交
+                    $.ajax({
+                    url: "http://localhost:5001/api/Authorize",
+                    type: "post",
+                    dataType: "json",
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    success: function (result) {
+                        for (var key in result) {
+                        localStorage.setItem(key,result[key]); //存储数据
+
+                     }
+                     //储存用户名
+                     localStorage.setItem("userName",userName); //存储数据
+                     window.location.href="main.html";
+                    }, error: function (error) {
+                        console.log(error)
+                    }
+
+                });
+                }else{
+                    alert("没有同意协议");
+                }
+               
+          
+            }); 
+            $("#login_btn2").click(function(){
+                var userName = $("#reguserName").val();
+                var userPwd = $("#reguserpwd").val();
+                var rePwd=$("#regReUserPwd").val();   
+                var data = {
+                    "userName": userName,
+                    "password": userPwd
+                };
+                //验证
+                 //验证部分
+                 if(userName==""||userPwd==""||rePwd==""){
+                  alert("文本框不能为空！")
+                  return;
+                }else{
+                    //对比密码框是否一直
+                    if(userPwd!=rePwd){
+                    alert("密码不一致！");
+                    }else{
+                        $.ajax({
+                    url: "http://localhost:5001/api/Login/regInfo",
+                    type: "post",
+                    dataType: "json",
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    success: function (result) {
+                        console.log(result);
+                        
+                    }, error: function (error) {
+                        console.log(error)
+                    }
+
+                });
+                    }
+                }
+              
+            });
+        </script>
+</body>
+
+</html>
