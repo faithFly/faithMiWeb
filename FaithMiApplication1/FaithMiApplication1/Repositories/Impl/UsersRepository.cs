@@ -27,22 +27,25 @@ namespace FaithMiApplication1.Repositories
         /// <param name="name"></param>
         /// <param name="pwd"></param>
         /// <returns></returns>
-        public async Task<Dictionary<int, string>> LogingUser(string name, string pwd)
+        public async Task<LoginMsgDTO> LogingUser(string name, string pwd)
         {
-            Dictionary<int, string> keyValuePairs = new Dictionary<int, string>();
+            LoginMsgDTO loginMsgDTO = new LoginMsgDTO();
             try
             {
+                
                
                 if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(pwd))
                 {
-                    keyValuePairs.Add(0, "用户名密码不能为空！");
-                    return keyValuePairs;
+                    loginMsgDTO.LoginCode = 0;
+                    loginMsgDTO.LoginMsg = "账号或密码为空";
+                    return loginMsgDTO;
                 }
                 User user = await _faithdbContext.Users.FirstOrDefaultAsync(x => x.UserName == name);
                 if (user == null)
                 {
-                    keyValuePairs.Add(0, "用户不存在！");
-                    return keyValuePairs;
+                    loginMsgDTO.LoginCode = 0;
+                    loginMsgDTO.LoginMsg = "用户不存在";
+                    return loginMsgDTO;
                 }
                 else
                 {
@@ -57,21 +60,26 @@ namespace FaithMiApplication1.Repositories
                     User user2 = await _faithdbContext.Users.FirstOrDefaultAsync(x => x.UserName == name && x.Password == res3);
                     if (user2 == null)
                     {
-                        keyValuePairs.Add(0, "账号密码不正确！");
-                        return keyValuePairs;
+                        loginMsgDTO.LoginCode = 0;
+                        loginMsgDTO.LoginMsg = "账号或密码错误";
+                        return loginMsgDTO;
                     }
                     else
                     {
                         //登录成功返回id
-                        keyValuePairs.Add(user2.UserId, "登录成功！");
-                        return keyValuePairs;
+                        loginMsgDTO.LoginCode = 1;
+                        loginMsgDTO.LoginMsg = "登录成功！";
+                        loginMsgDTO.UserId= user2.UserId;
+                        loginMsgDTO.UserName= user2.UserName;
+                        return loginMsgDTO;
                     }
                 }
             }
             catch (Exception ex)
             {
-               keyValuePairs.Add(0, ex.ToString());
-                return keyValuePairs;
+                loginMsgDTO.LoginCode = 0;
+                loginMsgDTO.LoginMsg = ex.ToString();
+                return loginMsgDTO;
             }
 
 
@@ -86,13 +94,18 @@ namespace FaithMiApplication1.Repositories
         /// <param name="pwd"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<string> regUser(string name, string pwd)
+        public async Task<ResMsgDTO> regUser(string name, string pwd)
         {
             try
             {
-                if (name == string.Empty || pwd == string.Empty || name == null || pwd == null)
+                
+                if (string.IsNullOrWhiteSpace(name)||string.IsNullOrWhiteSpace(pwd))
                 {
-                    return "用户名密码不能为空！";
+                    return new ResMsgDTO
+                    {
+                        RegCode = 0,
+                        RegMsg="输入内容有为空"
+                    };
                 }
                 else
                 {
@@ -118,16 +131,28 @@ namespace FaithMiApplication1.Repositories
                         int row = _faithdbContext.SaveChanges();
                         if (row > 0)
                         {
-                            return "注册成功！";
+                            return new ResMsgDTO
+                            {
+                                RegCode = 1,
+                                RegMsg = "注册成功！"
+                            };
                         }
                         else
                         {
-                            return "注册失败！";
+                            return new ResMsgDTO
+                            {
+                                RegCode = 0,
+                                RegMsg = "注册失败！"
+                            };
                         }
                     }
                     else
                     {
-                        return "用户已经存在，请更换一个用户名！";
+                        return new ResMsgDTO
+                        {
+                            RegCode = 0,
+                            RegMsg = "用户已存在！"
+                        };
                     }
 
                 }
@@ -135,7 +160,11 @@ namespace FaithMiApplication1.Repositories
             catch (Exception ex)
             {
 
-                return ex.Message;
+                return new ResMsgDTO
+                {
+                    RegCode = 0,
+                    RegMsg = ex.Message
+                }; ;
             }
 
         }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\faith\\Desktop\\gitMiWeb\\FaithMiApplication1\\FaithMiApplication1\\FaithMiApplication1.csproj": {}
+    "C:\\Users\\faith\\Desktop\\gitMiWeb\\faithMiWeb\\FaithMiApplication1\\FaithMiApplication1\\FaithMiApplication1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\faith\\Desktop\\gitMiWeb\\FaithMiApplication1\\FaithMiApplication1\\FaithMiApplication1.csproj": {
+    "C:\\Users\\faith\\Desktop\\gitMiWeb\\faithMiWeb\\FaithMiApplication1\\FaithMiApplication1\\FaithMiApplication1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\faith\\Desktop\\gitMiWeb\\FaithMiApplication1\\FaithMiApplication1\\FaithMiApplication1.csproj",
+        "projectUniqueName": "C:\\Users\\faith\\Desktop\\gitMiWeb\\faithMiWeb\\FaithMiApplication1\\FaithMiApplication1\\FaithMiApplication1.csproj",
         "projectName": "FaithMiApplication1",
-        "projectPath": "C:\\Users\\faith\\Desktop\\gitMiWeb\\FaithMiApplication1\\FaithMiApplication1\\FaithMiApplication1.csproj",
+        "projectPath": "C:\\Users\\faith\\Desktop\\gitMiWeb\\faithMiWeb\\FaithMiApplication1\\FaithMiApplication1\\FaithMiApplication1.csproj",
         "packagesPath": "C:\\Users\\faith\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\faith\\Desktop\\gitMiWeb\\FaithMiApplication1\\FaithMiApplication1\\obj\\",
+        "outputPath": "C:\\Users\\faith\\Desktop\\gitMiWeb\\faithMiWeb\\FaithMiApplication1\\FaithMiApplication1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\faith\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -22,6 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "http://121.196.106.7:7737/repository/nuget-hosted/": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -43,6 +44,10 @@
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[5.0.14, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[5.0.15, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",

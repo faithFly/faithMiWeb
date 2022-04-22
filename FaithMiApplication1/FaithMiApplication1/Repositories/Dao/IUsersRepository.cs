@@ -7,10 +7,10 @@ namespace FaithMiApplication1.Repositories
     {
         Task<IEnumerable<User>> GetUsersAsync();
         //用户简易登录
-        Task<Dictionary<int,string>> LogingUser(string name,string pwd);
+        Task<LoginMsgDTO> LogingUser(string name,string pwd);
 
         //用户注册
-        Task<string> regUser(string name,string pwd);
+        Task<ResMsgDTO> regUser(string name,string pwd);
 
        
     }

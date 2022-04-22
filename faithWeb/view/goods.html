@@ -12,67 +12,201 @@
             <link rel="stylesheet" href="../css/goods.css">
             <script src="../js/jq1.10.2.js"></script>
             <script>
-              layui.use('laypage', function(){
-                    var laypage = layui.laypage;
-                    
-                    //执行一个laypage实例
-                    laypage.render({
-                      elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
-                      ,count: 50 //数据总数，从服务端得到
-                    });
-                  });
-              $(function(){
+              function listClick(obj){
+                //获取li下标
+              var index=$(obj).index();
+              //获取li 下a标签中的值
+              var prodId=$(".samll_pro li:eq('"+index+"') a").text();  
+              $(location).attr('href', '../view/details.html');
+              //保存prodId到 localStorage
+              localStorage.setItem("prodId",prodId);
+              }
+               function selectProdByName(prodName){
+                             $("#list_con").empty();
+                              //加载全部
+                              var data={
+                                "name": prodName,
+                                "pageNum": 1,
+                                "pageSize": 12
+                              }
+                              $.ajax({
+                                url: "http://localhost:5001/api/listMain/GetProductPageNum",
+                                type: "post",
+                                dataType:"json",
+                                data:JSON.stringify(data),
+                                contentType: "application/json",
+                                success: function (res) {
+                                  var html="";
+                                  for(let i of res.item1){
+                                      html +=` <li onclick="listClick(this)">
+                                        <a style="display:none;">${i.productId}</a>
+                                        <img src="../${i.productPicture}" alt="">
+                                        <h3>${i.productName}</h3>
+                                        <p>${i.productTitle}</p>
+                                        <span>${i.productPrice}元起</span>
+                                      </li>`
+                                    }
+                                    $('#list_con').html(html)
+                                 //调用分页组件
+                                  layui.use('laypage', function(){
+                                      var laypage = layui.laypage;
+                                      
+                                      //执行一个laypage实例
+                                      laypage.render({
+                                        elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+                                        ,count: res.item2, //数据总数，从服务端得到
+                                        limit:12,
+                                        limits:[10, 20, 30, 40, 50],
+                                        jump: function(obj, first){
+                                    //首次不执行
+                                      if(!first){
+                                        var data={
+                                            "name": prodName,
+                                            "pageNum": obj.curr,
+                                            "pageSize": obj.limit
+                                          }
+                                          $.ajax({
+                                            url: "http://localhost:5001/api/listMain/GetProductPageNum",
+                                              type: "post",
+                                              dataType:"json",
+                                              data:JSON.stringify(data),
+                                              contentType: "application/json",
+                                              success: function (res) {
+                                                //重置
+                                                $("#list_con").empty();
+                                                var html="";
+                                                for(let i of res.item1){
+                                                    html +=` <li onclick="listClick(this)">
+                                                      <a style="display:none;">${i.productId}</a>
+                                                      <img src="../${i.productPicture}" alt="">
+                                                      <h3>${i.productName}</h3>
+                                                      <p>${i.productTitle}</p>
+                                                      <span>${i.productPrice}元起</span>
+                                                    </li>`
+                                                  }
+                                                  $('#list_con').html(html)
+                                              },error:function(err){
+                                                console.log(error)
+                                              }
+                                          })
+                                      }
+                                    }
+                                      });
+                                    });
+                                }, error: function (error) {
+                                    console.log(error)
+                                }
+                            });
+              }
+               function selectAllProd(){
+                $("#list_con").empty();
                   //加载全部
+                  var data={
+                    "name": "全部",
+                    "pageNum": 1,
+                    "pageSize": 12
+                  }
+                  const aaa=(val)=>{
+                    console.log(val);
+                  }
                   $.ajax({
-                    url: "http://localhost:5001/api/listMain/GetProductByCateName",
-                    type: "get",
-                    data:"cateName=全部",
+                    url: "http://localhost:5001/api/listMain/GetProductPageNum",
+                    type: "post",
+                    dataType:"json",
+                    data:JSON.stringify(data),
+                    contentType: "application/json",
                     success: function (res) {
-                     for(let i of res){
-                         $(".layui-tab-content div:eq(0) ul").append(` <li>
+                     //显示第一页
+                     var html="";
+                     for(let i of res.item1){
+                         html +=` <li onclick="listClick(this)">
+                          <a style="display:none;">${i.productId}</a>
                           <img src="../${i.productPicture}" alt="">
                           <h3>${i.productName}</h3>
                           <p>${i.productTitle}</p>
                           <span>${i.productPrice}元起</span>
-                        </li>`)
+                        </li>`
                        }
-                     
+                       $('#list_con').html(html)
+                       
+                     //调用分页组件
+                     layui.use('laypage', function(){
+                        var laypage = layui.laypage;
+                        
+                        //执行一个laypage实例
+                        laypage.render({
+                          elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+                          ,count: res.item2, //数据总数，从服务端得到
+                          limit:12,
+                          limits:[10, 20, 30, 40, 50],
+                          jump: function(obj, first){
+                       //首次不执行
+                        if(!first){
+                          var data={
+                              "name": "全部",
+                              "pageNum": obj.curr,
+                              "pageSize": obj.limit
+                            }
+                            $.ajax({
+                              url: "http://localhost:5001/api/listMain/GetProductPageNum",
+                                type: "post",
+                                dataType:"json",
+                                data:JSON.stringify(data),
+                                contentType: "application/json",
+                                success: function (res) {
+                                  //重置
+                                  $("#list_con").empty();
+                                  var html="";
+                                  for(let i of res.item1){
+                                      html +=` <li onclick="listClick(this)">
+                                        <a style="display:none;">${i.productId}</a>
+                                        <img src="../${i.productPicture}" alt="">
+                                        <h3>${i.productName}</h3>
+                                        <p>${i.productTitle}</p>
+                                        <span>${i.productPrice}元起</span>
+                                      </li>`
+                                    }
+                                    $('#list_con').html(html)
+                                },error:function(err){
+                                  console.log(error)
+                                }
+                            })
+                        }
+                      }
+                         });
+                      });
+                  
+                  
                     }, error: function (error) {
                         console.log(error)
                     }
                 });
-              
-                
-   //li点击事件
-   $(".title_height li").click(function(){
-                
-                  //获取li的下标
-                 var index=$(this).index();   
-                   //获取当前li的内容 
-                var title=$(".title_height li:eq('"+index+"')").text();  
-                 $.ajax({
-                    url: "http://localhost:5001/api/listMain/GetProductByCateName",
-                    type: "get",
-                    data:"cateName="+title,
-                    success: function (res) {
-                      //在对应的div中遍历
-                      //1.获取对应div的对象
-                     for(let i of res){
-                         $(".layui-tab-content div:eq('"+index+"') ul").append(` <li>
-                          <img src="../${i.productPicture}" alt="">
-                          <h3>${i.productName}</h3>
-                          <p>${i.productTitle}</p>
-                          <span>${i.productPrice}元起</span>
-                        </li>`)
-                       }
-                     
-                    }, error: function (error) {
-                        console.log(error)
-                    }
-                });
-                });
+              }
+                $(function(){
+                        selectAllProd();
+                        //li点击事件
+                        $(".title_height li").click(function(){
+                            //获取li的下标
+                            var index=$(this).index();   
+                            //获取当前li的内容 
+                            var title=$(".title_height li:eq('"+index+"')").text();  
+                            if(title=="全部"){
+                              selectAllProd();
+                            }else {
+                            selectProdByName(title);
+                            }
+                           
+                      });
+                       //li点击事件
+                      //  $(document).on('click','.samll_pro li',function(){
+                      //       //获取li的下标
+                      //       console.log(1);
+                            
+                           
+                      // });
+                      
               })
-             
+          
             </script>
 </head>
 <body>
@@ -155,16 +289,17 @@
             <li>充电宝</li>
           </ul>
           <div class="layui-tab-content">
-            <div class="layui-tab-item layui-show con_list"> <ul class="samll_pro"></ul></div>
-            <div class="layui-tab-item con_list"><ul class="samll_pro"></ul></div>
-            <div class="layui-tab-item con_list"><ul class="samll_pro"></ul></div>
-            <div class="layui-tab-item con_list"><ul class="samll_pro"></ul></div>
-            <div class="layui-tab-item con_list"><ul class="samll_pro"></ul></div>
-            <div class="layui-tab-item con_list"><ul class="samll_pro"></ul></div>
-            <div class="layui-tab-item con_list"><ul class="samll_pro"></ul></div>
-            <div class="layui-tab-item con_list"><ul class="samll_pro"></ul></div>
-            <div class="layui-tab-item con_list"><ul class="samll_pro"></ul></div>
-          </div>
+            <div class="layui-tab-item layui-show con_list">
+                 <ul class="samll_pro"  id="list_con">
+                  <!-- <li v-for="(item, index) in ['1']" :key="index" :key="index" onclick="listClick()">
+                    <img src="../${i.productPicture}" alt="">
+                    <h3>${i.productName}</h3>
+                    <p>${i.productTitle}</p>
+                    <span>${i.productPrice}元起</span>
+                  </li> -->
+                </ul>
+              </div>
+             </div>
            <div id="test1"></div>
         </div>
        

@@ -60,8 +60,16 @@ namespace FaithMiApplication1.Controllers
         /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<string>> regInfo([FromBody] User userinfo) {
-            var users = await _usersRepository.regUser(userinfo.UserName, userinfo.Password);
-            return Ok(users);
+            try
+            {
+                var users = await _usersRepository.regUser(userinfo.UserName, userinfo.Password);
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
         
     }

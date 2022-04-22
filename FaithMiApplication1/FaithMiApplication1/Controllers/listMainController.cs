@@ -3,6 +3,7 @@ using FaithMiApplication1.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Nancy.Json;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -30,8 +31,16 @@ namespace FaithMiApplication1.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategory()
         {
-            var cates = await _productDao.GetCategory();
-            return Ok(cates);
+            try
+            {
+                var cates = await _productDao.GetCategory();
+                return Ok(cates);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
         /// <summary>
         /// 通过商品分类获取商品列表并取得前9个
@@ -41,8 +50,47 @@ namespace FaithMiApplication1.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductByCateName(string cateName)
         {
-            var prod = await _productDao.GetProductByCateName(cateName);
-            return Ok(prod);
+            try
+            {
+                var prod = await _productDao.GetProductByCateName(cateName);
+                return Ok(prod);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+           
          }
+        /// <summary>
+        /// 获取行数
+        /// </summary>
+        /// <param name="cateName"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult<Tuple<List<Product>, int>>> GetProductPageNum([FromBody]getProdPage page)
+        {
+            try
+            {
+                return await _productDao.getProductByPage(page);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+           
+        }
+        [HttpGet]
+        public async Task<ActionResult<Tuple<List<Product>, List<ProductPicture>>>> GetProductByProdId(int prodId) {
+            try
+            {
+                Tuple<List<Product>, List<ProductPicture>> dbcon = await _productDao.GetProductByProdId(prodId);
+                return Ok(dbcon);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

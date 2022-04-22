@@ -1,4 +1,5 @@
 ﻿using FaithMiApplication1.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,5 +16,12 @@ namespace FaithMiApplication1.Repositories
 
         //通过商品分类获取商品列表并取得前9个
         Task<IEnumerable<Product>> GetProductByCateName(string name);
+        
+        //分页查询
+        Task<Tuple<List<Product>, int>> getProductByPage(getProdPage page);
+
+        //根据productid查询商品参数
+        Task<Tuple<List<Product>,List<ProductPicture>>> GetProductByProdId(int prodId);
+
     }
 }

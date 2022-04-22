@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using Newtonsoft.Json;
 
 namespace FaithMiApplication1
 {
@@ -116,6 +118,11 @@ namespace FaithMiApplication1
                             }, Array.Empty<string>() }
                             });
             });
+
+              services.AddControllers().AddNewtonsoftJson(option =>
+                   //ºöÂÔÑ­»·ÒýÓÃ
+                   option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+               );
 
             services.AddMvc();
         }
