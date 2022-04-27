@@ -31,7 +31,7 @@ namespace faithTest
             m = int.Parse(Console.ReadLine());
             Console.WriteLine("鸡：" + (4 * n - m) / 2 + "兔子:" + (m - 2 * n) / 2);*/
 
-            string a = "hahahahhahahah";
+            /*string a = "hahahahhahahah";
             if (a.IndexOf(" ")>=0)
             {
                 Console.WriteLine("有空格");
@@ -39,8 +39,9 @@ namespace faithTest
             else
             {
                 Console.WriteLine("没有空格");
-            }
-           
+            }*/
+            
+
         }
 
 

@@ -75,54 +75,77 @@ namespace FaithMiApplication1
             })
             .AddJwtBearer(o =>
             {
-                 //主要是jwt  token参数设置
-                 o.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                //主要是jwt  token参数设置
+                o.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
-                     //Token颁发机构
-                     ValidIssuer = jwtSettings.Issuer,
-                     //颁发给谁
-                     ValidAudience = jwtSettings.Audience,
-                     //这里的key要进行加密，需要引用Microsoft.IdentityModel.Tokens
-                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey))
-                     //ValidateIssuerSigningKey=true,
-                     ////是否验证Token有效期，使用当前时间与Token的Claims中的NotBefore和Expires对比
-                     //ValidateLifetime=true,
-                     ////允许的服务器时间偏移量
-                     //ClockSkew=TimeSpan.Zero
+                    //Token颁发机构
+                    ValidIssuer = jwtSettings.Issuer,
+                    //颁发给谁
+                    ValidAudience = jwtSettings.Audience,
+                    //这里的key要进行加密，需要引用Microsoft.IdentityModel.Tokens
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey))
+                    //ValidateIssuerSigningKey=true,
+                    ////是否验证Token有效期，使用当前时间与Token的Claims中的NotBefore和Expires对比
+                    //ValidateLifetime=true,
+                    ////允许的服务器时间偏移量
+                    //ClockSkew=TimeSpan.Zero
 
-                 };
+                };
             });
+            /*services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(option =>
+                {
+                    option.Events = new JwtBearerEvents()
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            context.Token = context.Request.Cookies["access_token"];
+                            return Task.CompletedTask;
+                        }
+                    };
+                    option.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = "faith@tom.com",
+                        ValidAudience = "user",
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1234567890123456"))
+                    };
+                }
+                );*/
 
 
 
             services.AddSwaggerGen(c =>
-            {
+                    {
               
-                c.DocInclusionPredicate((docName, description) => true);
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Description = "JWT授权(数据将在请求头中进行传输) 在下方输入Bearer {token} 即可，注意两者之间有空格",
-                    Name = "Authorization",//jwt默认的参数名称
-                    In = ParameterLocation.Header,//jwt默认存放Authorization信息的位置(请求头中)
-                    Type = SecuritySchemeType.ApiKey
-                });
-                //认证方式，此方式为全局添加
-                  c.AddSecurityRequirement(new OpenApiSecurityRequirement {
-                            { new OpenApiSecurityScheme
-                            {
-                            Reference = new OpenApiReference()
-                            {
-                            Id = "Bearer",
-                            Type = ReferenceType.SecurityScheme
-                            }
-                            }, Array.Empty<string>() }
-                            });
-            });
+                        c.DocInclusionPredicate((docName, description) => true);
+                        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                        {
+                            Description = "JWT授权(数据将在请求头中进行传输) 在下方输入Bearer {token} 即可，注意两者之间有空格",
+                            Name = "Authorization",//jwt默认的参数名称
+                            In = ParameterLocation.Header,//jwt默认存放Authorization信息的位置(请求头中)
+                            Type = SecuritySchemeType.ApiKey
+                        });
+                        //认证方式，此方式为全局添加
+                          c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                                    { new OpenApiSecurityScheme
+                                    {
+                                    Reference = new OpenApiReference()
+                                    {
+                                    Id = "Bearer",
+                                    Type = ReferenceType.SecurityScheme
+                                    }
+                                    }, Array.Empty<string>() }
+                                    });
+                    });
 
-              services.AddControllers().AddNewtonsoftJson(option =>
-                   //忽略循环引用
-                   option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-               );
+                      services.AddControllers().AddNewtonsoftJson(option =>
+                       //忽略循环引用
+                       option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                   );
 
             services.AddMvc();
         }
@@ -141,9 +164,9 @@ namespace FaithMiApplication1
 
             app.UseRouting();
 
-            app.UseAuthorization();
             app.UseAuthentication();
-
+            app.UseAuthorization();
+            
             app.UseCors("any");
 
             

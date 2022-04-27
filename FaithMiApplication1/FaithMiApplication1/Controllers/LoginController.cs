@@ -46,12 +46,17 @@ namespace FaithMiApplication1.Controllers
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<string>> loginInfo([FromBody]User userinfo) {
-
-            var users = await _usersRepository.LogingUser(userinfo.UserName,userinfo.Password);
-            return Ok(users);
-
-
-       }
+            try
+            {
+                var users = await _usersRepository.LogingUser(userinfo.UserName, userinfo.Password);
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
+         }
 
         /// <summary>
         /// 用户注册

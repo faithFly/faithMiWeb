@@ -26,11 +26,11 @@
 
                 }
                   // 将token设置到请求头headers中
-                  $.ajaxSetup({
-                      headers:{
-                          'Authorization':token
-                      }
-                  })
+                  // $.ajaxSetup({
+                  //     headers:{
+                  //         'Authorization':token
+                  //     }
+                  // })
                   //加载手机页面
                   $.ajax({
                     url: "http://localhost:5001/api/listMain/GetProductByCateName",
@@ -161,7 +161,7 @@
     <div class="search_con">
       <img src="../img/logo.jpg" width="110" height="100">
       <ul>
-        <li><a>首页</a> </li>
+        <li><a href="../view/main.html">首页</a> </li>
         <li><a href="../view/goods.html">全部商品</a> </li>
         <li><a>关于我们</a> </li>
       </ul>

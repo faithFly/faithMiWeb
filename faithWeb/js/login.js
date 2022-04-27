@@ -1,40 +1,61 @@
+//写cookies函数 
+function SetCookie(name, value) //两个参数，一个是cookie的名子，一个是值 
+{
+ var Days = 7; //此 cookie 将被保存 7 天 
+ var exp = new Date(); //new Date("December 31, 9998"); 
+ exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+ document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+}
+function getCookie(name) //取cookies函数
+{
+ var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+ if(arr != null) return unescape(arr[2]);
+ return null;
+}
+function delCookie(name) //删除cookie 
+{
+ var exp = new Date();
+ exp.setTime(exp.getTime() - 1);
+ var cval = getCookie(name);
+ if(cval != null) document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+}
 
 $(function(){
- //    鼠标移入移出改变边框
- $("#btn_login").mousemove(function(){
-     $("#btn_login").css("border-bottom","4px solid #FF5C00")
- })
- $("#btn_login").mouseout(function(){
-     $("#btn_login").css("border","0")
- })
- $("#right_btn").mousemove(function(){
-     $("#right_btn").css("border-bottom","4px solid #FF5C00")
- })
- $("#right_btn").mouseout(function(){
-  $("#right_btn").css("border","0")
- })
- //点击切换signin signup的div
- $("#btn_login").click(function(){
-     var txt1=$("#userName").val();
-     var txt2=$("#userpwd").val();
-     if(txt1!=''||txt2!=''){
-      return
-     }
-     //清除文本改变样式
-     $("#reguserName").val("");
-     $("#reguserpwd").val("");
-     $("#regReUserPwd").val("");
-     $(".txt_click2").css("margin-left","20px");
-     $(".txt_click2").css("line-height","80px");
-     $(".txt_click").css("margin-left","20px");
-     $(".txt_click").css("line-height","80px");
-     $(".txt_click3").css("margin-left","20px");
-     $(".txt_click3").css("line-height","80px");
- //设置sign-in Div可见
- $("#login_d").css("display","block")
- $("#reg_d").css("display","none")
+            //    鼠标移入移出改变边框
+            $("#btn_login").mousemove(function(){
+                $("#btn_login").css("border-bottom","4px solid #FF5C00")
+            })
+            $("#btn_login").mouseout(function(){
+                $("#btn_login").css("border","0")
+            })
+            $("#right_btn").mousemove(function(){
+                $("#right_btn").css("border-bottom","4px solid #FF5C00")
+            })
+            $("#right_btn").mouseout(function(){
+            $("#right_btn").css("border","0")
+            })
+            //点击切换signin signup的div
+            $("#btn_login").click(function(){
+                var txt1=$("#userName").val();
+                var txt2=$("#userpwd").val();
+                if(txt1!=''||txt2!=''){
+                return
+                }
+                //清除文本改变样式
+                $("#reguserName").val("");
+                $("#reguserpwd").val("");
+                $("#regReUserPwd").val("");
+                $(".txt_click2").css("margin-left","20px");
+                $(".txt_click2").css("line-height","80px");
+                $(".txt_click").css("margin-left","20px");
+                $(".txt_click").css("line-height","80px");
+                $(".txt_click3").css("margin-left","20px");
+                $(".txt_click3").css("line-height","80px");
+                //设置sign-in Div可见
+                $("#login_d").css("display","block")
+                $("#reg_d").css("display","none")
 
- });
+            });
 
             $("#right_btn").click(function(){
                 var txt1=$("#reguserName").val();
@@ -59,8 +80,8 @@ $(function(){
            $("#login_btn").click(function () {
             //获取用户名密码
             var userName = $("#userName").val();
-           var userPwd = $("#userpwd").val();
-           var data = {
+            var userPwd = $("#userpwd").val();
+            var data = {
                "userName": userName,
                "password": userPwd
            };
@@ -85,10 +106,13 @@ $(function(){
                    if(result.code==0){
                     alert(result.msg)   
                    }else{
-                    localStorage.setItem("token",result.token); 
+                       console.log(result);
+                   // localStorage.setItem("token",result.token); 
+                    SetCookie("token", result.cookie);//建立cookie存token
                     localStorage.setItem("userid",result.id); 
                     localStorage.setItem("userName",result.name); 
                     window.location.href="main.html";
+                   // alert(111)
                    }    
                
                }, error: function (error) {
@@ -111,7 +135,7 @@ $("#login_btn2").click(function(){
    };
    //验证
     //验证部分
-    if(userName==""||userPwd==""||rePwd==""){
+    if(!userName||!userPwd||!rePwd){
      alert("文本框不能为空！")
      return;
    }else{

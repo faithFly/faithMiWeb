@@ -164,7 +164,7 @@ namespace FaithMiApplication1.Repositories
                 {
                     RegCode = 0,
                     RegMsg = ex.Message
-                }; ;
+                }; 
             }
 
         }
