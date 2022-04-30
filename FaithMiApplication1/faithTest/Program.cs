@@ -40,8 +40,13 @@ namespace faithTest
             {
                 Console.WriteLine("没有空格");
             }*/
-            
+            string value = faith.a.ToString();
+            Console.WriteLine(value);
 
+        }
+        public enum faith { 
+            a,
+            b
         }
 
 

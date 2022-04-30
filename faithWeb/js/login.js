@@ -75,8 +75,6 @@ $(function(){
             $("#reg_d").css("display","block")
 
             });
-           //设置选中 
-           // $('#cb_login').attr('checked', true);
            $("#login_btn").click(function () {
             //获取用户名密码
             var userName = $("#userName").val();
@@ -106,13 +104,10 @@ $(function(){
                    if(result.code==0){
                     alert(result.msg)   
                    }else{
-                       console.log(result);
-                   // localStorage.setItem("token",result.token); 
-                    SetCookie("token", result.cookie);//建立cookie存token
+                    localStorage.setItem("token",result.token); 
                     localStorage.setItem("userid",result.id); 
                     localStorage.setItem("userName",result.name); 
                     window.location.href="main.html";
-                   // alert(111)
                    }    
                
                }, error: function (error) {

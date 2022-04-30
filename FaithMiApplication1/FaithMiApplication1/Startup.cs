@@ -20,6 +20,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Newtonsoft.Json;
+using FaithMiApplication1.Repositories.Dao;
+using FaithMiApplication1.Repositories.Impl;
 
 namespace FaithMiApplication1
 {
@@ -38,6 +40,8 @@ namespace FaithMiApplication1
 
             services.AddControllers();
             services.AddScoped<IProductDao, ProductDao>();
+            services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<IOrderDao, ShoppingDao>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FaithMiApplication1", Version = "v1" });
@@ -66,55 +70,21 @@ namespace FaithMiApplication1
             //将配置绑定到JwtSettings实例中
             var jwtSettings = new JwtSettings();
             Configuration.Bind("JwtSettings", jwtSettings);
-
-            services.AddAuthentication(options =>
-            {
-                //认证middleware配置
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(o =>
-            {
-                //主要是jwt  token参数设置
-                o.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-                {
-                    //Token颁发机构
-                    ValidIssuer = jwtSettings.Issuer,
-                    //颁发给谁
-                    ValidAudience = jwtSettings.Audience,
-                    //这里的key要进行加密，需要引用Microsoft.IdentityModel.Tokens
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey))
-                    //ValidateIssuerSigningKey=true,
-                    ////是否验证Token有效期，使用当前时间与Token的Claims中的NotBefore和Expires对比
-                    //ValidateLifetime=true,
-                    ////允许的服务器时间偏移量
-                    //ClockSkew=TimeSpan.Zero
-
-                };
-            });
-            /*services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(option =>
-                {
-                    option.Events = new JwtBearerEvents()
+            //添加jwt验证：
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => {
+                    options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        OnMessageReceived = context =>
-                        {
-                            context.Token = context.Request.Cookies["access_token"];
-                            return Task.CompletedTask;
-                        }
+                        ValidateIssuer = true,//是否验证Issuer
+                        ValidateAudience = true,//是否验证Audience
+                        ValidateLifetime = true,//是否验证失效时间
+                        ClockSkew = TimeSpan.FromSeconds(30),
+                        ValidateIssuerSigningKey = true,//是否验证SecurityKey
+                        ValidAudience = Const.Domain,//Audience
+                        ValidIssuer = Const.Domain,//Issuer，这两项和前面签发jwt的设置一致
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Const.SecurityKey))//拿到SecurityKey
                     };
-                    option.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = "faith@tom.com",
-                        ValidAudience = "user",
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1234567890123456"))
-                    };
-                }
-                );*/
+                });
 
 
 

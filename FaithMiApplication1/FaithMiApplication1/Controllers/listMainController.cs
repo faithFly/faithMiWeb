@@ -1,5 +1,8 @@
 ﻿using FaithMiApplication1.Models;
 using FaithMiApplication1.Repositories;
+using FaithMiApplication1.Repositories.Dao;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Nancy.Json;
@@ -16,12 +19,14 @@ namespace FaithMiApplication1.Controllers
     public class listMainController : ControllerBase
     {
         private readonly IProductDao _productDao;
+        private readonly IOrderDao _orderRepository;
         /// <summary>
         /// 构造方法
         /// </summary>
-        public listMainController(IProductDao productDao)
+        public listMainController(IProductDao productDao, IOrderDao orderDao)
         {
             _productDao = productDao;
+            _orderRepository = orderDao;
         }
         /// <summary>
         /// 获取商品分类
@@ -91,6 +96,6 @@ namespace FaithMiApplication1.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
+      
     }
 }

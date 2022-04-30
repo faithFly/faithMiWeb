@@ -28,7 +28,7 @@ namespace FaithMiApplication1.Repositories.Impl
                     return new ResMsgDTO
                     {
                         RegCode = 1,
-                        RegMsg = "订单号重复有错误！"
+                        RegMsg = "暂时同一件商品只能加入同一件商品！"
                     };
                 }
                 _faithdbContext.Shoppingcarts.Add(shoppingcart);

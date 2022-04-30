@@ -45,21 +45,20 @@ namespace FaithMiApplication1.Controllers
                          }
                         else
                         {
-                        var claim = new Claim[]{
-                        new Claim(ClaimTypes.Name,viewModel.UserName),
-                        new Claim(ClaimTypes.Role,viewModel.Password)
+                       var claims = new[]
+                         {
+                          new Claim(JwtRegisteredClaimNames.Nbf,$"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}") ,
+                          new Claim (JwtRegisteredClaimNames.Exp,$"{new DateTimeOffset(DateTime.Now.AddMinutes(30)).ToUnixTimeSeconds()}"),
+                          new Claim(ClaimTypes.Name, users.UserName)
                          };
-
-                        //对称秘钥
-                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
-                        //签名证书(秘钥，加密算法)
+                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Const.SecurityKey));
                         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-                        //生成token  [注意]需要nuget添加Microsoft.AspNetCore.Authentication.JwtBearer包，并引用System.IdentityModel.Tokens.Jwt命名空间
-                        var token = new JwtSecurityToken(_jwtSettings.Issuer, _jwtSettings.Audience, claim, DateTime.Now, DateTime.Now.AddMinutes(5), creds);
-                        /*  var token = JwtHelper.GetToken(users.UserName);
-                          Response.Cookies.Append("access_token", token);
-                          return Ok(new { cookie=token,id = users.UserId, name = users.UserName });*/
+                        var token = new JwtSecurityToken(
+                            issuer: Const.Domain,
+                            audience: Const.Domain,
+                            claims: claims,
+                            expires: DateTime.Now.AddMinutes(30),
+                            signingCredentials: creds);
                         return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token), id = users.UserId ,name=users.UserName});
                         }
                     

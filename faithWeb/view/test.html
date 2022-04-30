@@ -8,12 +8,18 @@
     <script src="../js/jq1.10.2.js"></script>
 </head>
 <body>
-    <textarea cols="80" rows="5" id="txt" style="cursor: pointer;">
-		
-    </textarea>
-    <button onclick="a()">qdasdada</button>
+
+    <input type="text" name="numName" id="num" οnkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')">
+    <button id="btn1">查询</button>
 </body>
 <script> 
+$(function(){
+$("#btn1").click(function(){
+var index=$("#num").val();
+  console.log(index);
+})
+
+})
 
 </script>
 </html>
