@@ -10,6 +10,6 @@ namespace FaithMiApplication1.Models
         public string Id { get; set; }
         public long? UserId { get; set; }
         public DateTime? BuyTime { get; set; }
-        public sbyte? Status { get; set; }
+        public int? Status { get; set; }
     }
 }

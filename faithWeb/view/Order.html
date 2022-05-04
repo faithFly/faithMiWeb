@@ -9,9 +9,9 @@
             <link rel="stylesheet" href="../css/layui.css">
             <!-- 引入 layui.js -->
             <script src="../js/layui.js"></script>
-            <link rel="stylesheet" href="../css/shoppingCart.css">
+            <link rel="stylesheet" href="../css/Order.css">
             <script src="../js/jq1.10.2.js"></script>
-           <script src="../js/shoppingCart.js"></script>
+           <script src="../js/Order.js"></script>
 </head>
 <body>
   <div>
@@ -82,7 +82,7 @@
               <p class="icon_p">
                 <!-- <i class="layui-icon layui-icon-cart" style="font-size: 30px; color: #1E9FFF;">&#xe657;</i>  -->
                 <i class="layui-icon layui-icon-cart" style="font-size: 60px; color: #1E9FFF;"></i>  
-            我的购物车 
+            确认订单 
             </p>
             <span class="tick">
                 温馨提示：产品是否购买成功，以最终下单为准哦，请尽快结算
@@ -91,11 +91,47 @@
       </div>
       <div class="cart_con">
         <div class="center_con">
-          <table id="demo" lay-filter="test" lay-data="{id: 'idTest'}"></table>
-          <button type="button" class="layui-btn layui-btn-primary" id="ord_Btn" style="float:right;">结算</button>
+          <h2 style="margin-top: 5px;">收货地址</h2>
+          <div class="adressDiv">
+                <div class="adress_txt">
+                     <h3 style="margin-top: 10px;margin-left: 15px;">faith</h3>
+                     <p style="margin-top: 10px;margin-left: 15px;">13732508975</p>
+                     <p style="margin-top: 10px;margin-left: 15px;">衢州市衢江区上方镇艺坛新村</p>
+                </div>
+          </div>
+          <h2 style="margin-top: 5px;">商品及优惠券</h2>
+          <div class="prod_dev">
+          <ul id="orderList"> 
+            
+          </ul>
+          </div>
+         <div class="baoyou_tit">
+            <span style="display: block;width: 80px;height: 100%;float: left;"><a style="line-height: 50px;font-size: 18px;">配送方式</a></span>
+            <span style="display: block;width: 80px;height: 100%;float: left;margin-left: 10px;"><a style="line-height: 50px;color: orange;">包邮</a></span>
+          </div>
+          <div class="fapiao_tit">
+            <span style="display: block;width: 80px;height: 100%;float: left;"><a style="line-height: 80px;font-size: 18px;">发票</a></span>
+            <span style="display: block;width: 80px;height: 100%;float: left;margin-left: 10px;"><a style="line-height: 80px;color: orange;">电子发票</a></span>
+            <span style="display: block;width: 80px;height: 100%;float: left;margin-left: 10px;"><a style="line-height: 80px;color: orange;">个人</a></span>
+            <span style="display: block;width: 80px;height: 100%;float: left;margin-left: 10px;"><a style="line-height: 80px;color: orange;">商品明细</a></span>
+          </div>
+          <div class="jiesuan_dev">
+            <div class="mingxi">
+            <ul>
+              <li><a>商品件数：</a><a class="right_txt">1件</a></li>
+              <li><a>商品总价：</a><a class="right_txt" id="price_txt">1599</a></li>
+              <li><a>活动优惠：</a><a class="right_txt">-0元</a></li>
+              <li><a>优惠券抵扣：</a><a class="right_txt">-0元</a></li>
+              <li><a>运费：</a><a class="right_txt">0元</a></li>
+              <li><a>应付总额</a><a class="sum_txt" id="sum_txt">1599件</a></li>
+           
+            </ul>
+            </div>
+          </div>
+          <button type="button" id="end_Btn" class="layui-btn" style="float: right;margin-top: 15px;">结算</button>
         </div>
       </div>
-      
+       
        </div>
     </div>
         <div class="main_bottom">

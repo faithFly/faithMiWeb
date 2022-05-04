@@ -117,6 +117,10 @@ namespace FaithMiApplication1.Models
                 entity.Property(e => e.ProductId)
                     .HasColumnName("product_id")
                     .HasComment("商品id");
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(20)
+                    .HasColumnName("userid")
+                    .HasComment("用户id");
             });
 
             modelBuilder.Entity<Product>(entity =>
@@ -201,6 +205,8 @@ namespace FaithMiApplication1.Models
                 entity.Property(e => e.ProductId).HasColumnName("product_id");
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.Property(e => e.CartNum).HasColumnName("cart_num");
             });
 
             modelBuilder.Entity<User>(entity =>

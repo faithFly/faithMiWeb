@@ -18,7 +18,7 @@ namespace FaithMiApplication1.Models
         public string ProductTitle { get; set; }
         public string ProductIntro { get; set; }
         public string ProductPicture { get; set; }
-        public double ProductPrice { get; set; }
+        public int ProductPrice { get; set; }
         public double ProductSellingPrice { get; set; }
         public int ProductNum { get; set; }
         public int ProductSales { get; set; }

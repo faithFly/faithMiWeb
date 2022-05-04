@@ -10,5 +10,6 @@ namespace FaithMiApplication1.Models
         public int? Id { get; set; }
         public int? UserId { get; set; }
         public int? ProductId { get; set; }
+        public int CartNum { get; set; }
     }
 }

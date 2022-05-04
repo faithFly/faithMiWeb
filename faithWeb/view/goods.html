@@ -183,6 +183,18 @@
                 });
               }
                 $(function(){
+                   // 获取token  
+                    var token = localStorage.getItem('token');
+                    var userName=localStorage.getItem('userName');
+                    //如果有token证明已经登录
+                    if(token!=""){
+                    //登录成功后实现的特效隐藏前两个a标签
+                    $("#topbar_changeA a").eq(0).css("display","none");
+                    $("#topbar_changeA a").eq(1).css("display","none");
+                    $("#topbar_changeA a").eq(2).html(userName);
+                    $("#topbar_changeA span").eq(0).css("display","none");
+
+                    }
                         selectAllProd();
                         //li点击事件
                         $(".title_height li").click(function(){
@@ -197,13 +209,15 @@
                             }
                            
                       });
-                       //li点击事件
-                      //  $(document).on('click','.samll_pro li',function(){
-                      //       //获取li的下标
-                      //       console.log(1);
-                            
-                           
-                      // });
+                //点击购物车跳转
+                $(".icon_txt").click(function(){
+                  var uid = localStorage.getItem('userid');
+                  if(uid==null||uid==""){
+                    layer.msg("还没有登录呢！"); 
+                  }
+                  window.location.href="shoppingCart.html";
+
+                })
                       
               })
           
@@ -291,12 +305,7 @@
           <div class="layui-tab-content">
             <div class="layui-tab-item layui-show con_list">
                  <ul class="samll_pro"  id="list_con">
-                  <!-- <li v-for="(item, index) in ['1']" :key="index" :key="index" onclick="listClick()">
-                    <img src="../${i.productPicture}" alt="">
-                    <h3>${i.productName}</h3>
-                    <p>${i.productTitle}</p>
-                    <span>${i.productPrice}元起</span>
-                  </li> -->
+                
                 </ul>
               </div>
              </div>

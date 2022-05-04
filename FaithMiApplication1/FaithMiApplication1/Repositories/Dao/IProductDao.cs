@@ -23,5 +23,6 @@ namespace FaithMiApplication1.Repositories
         //根据productid查询商品参数
         Task<Tuple<List<Product>,List<ProductPicture>>> GetProductByProdId(int prodId);
 
+
     }
 }

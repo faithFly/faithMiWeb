@@ -96,6 +96,11 @@ namespace FaithMiApplication1.Repositories
 
         }
 
+        /// <summary>
+        /// 通过商品id获取商品图片和商品参数
+        /// </summary>
+        /// <param name="prodId"></param>
+        /// <returns></returns>
         public async Task<Tuple<List<Product>, List<ProductPicture>>> GetProductByProdId(int prodId)
         {
             var prod_List=await _faithdbContext.Products.Where(p=>p.ProductId == prodId).ToListAsync();

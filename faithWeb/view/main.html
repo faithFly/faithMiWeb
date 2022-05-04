@@ -40,6 +40,7 @@
                      for(let i of res){
                          $('#phone_dv').append(` <li>
                           <img src="../${i.productPicture}" alt="">
+                          <a style="display:none;">${i.productId}</a>
                           <h3>${i.productName}</h3>
                           <p>${i.productTitle}</p>
                           <span>${i.productPrice}元起</span>
@@ -62,6 +63,7 @@
                      for(let i of res){
                          $('#tv_dv').append(` <li>
                           <img src="../${i.productPicture}" alt="">
+                          <a style="display:none;">${i.productId}</a>
                           <h3>${i.productName}</h3>
                           <p>${i.productTitle}</p>
                           <span>${i.productPrice}元起</span>
@@ -85,6 +87,7 @@
                      for(let i of res){
                          $('#list_dv').append(` <li>
                           <img src="../${i.productPicture}" alt="">
+                          <a style="display:none;">${i.productId}</a>
                           <h3>${i.productName}</h3>
                           <p>${i.productTitle}</p>
                           <span>${i.productPrice}元起</span>
@@ -98,7 +101,17 @@
                     }
 
                 });
-                 //首页下边框为蓝色
+                 
+                //点击购物车跳转
+                $(".icon_txt").click(function(){
+                  var uid = localStorage.getItem('userid');
+                  if(uid==null||uid==""){
+                    layer.msg("还没有登录呢！"); 
+                    return;
+                  }
+                  window.location.href="shoppingCart.html";
+
+                })
                
         })
       layui.use('carousel', function(){

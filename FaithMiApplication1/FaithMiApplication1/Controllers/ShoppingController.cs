@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -24,6 +25,11 @@ namespace FaithMiApplication1.Controllers
         {
             _orderRepository = orderDao;
         }
+        /// <summary>
+        /// 添加购物车
+        /// </summary>
+        /// <param name="shoppingcart"></param>
+        /// <returns></returns>
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         public async Task<ActionResult<ResMsgDTO>> AddOrder([FromBody] Shoppingcart shoppingcart)
@@ -39,6 +45,44 @@ namespace FaithMiApplication1.Controllers
                 return BadRequest(ex.Message);
             }
 
+        }
+
+        /// <summary>
+        /// 查询购物车
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult<ShoppingList> GetShoppingcart(int userId)
+        {
+            try
+            {
+                
+                return _orderRepository.GetShoppingcart(userId);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+
+        }
+        /// <summary>
+        /// 删除购物车
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="sid"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost]
+        public ActionResult<ResMsgDTO> DelShopping([FromBody] DelShopDto delShopDto) {
+            try
+            {
+                return _orderRepository.DelShopping(delShopDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
