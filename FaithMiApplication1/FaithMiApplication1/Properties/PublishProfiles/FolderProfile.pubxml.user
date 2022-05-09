@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\Users\faith\Desktop\gitMiWeb\faithMiWeb\FaithMiApplication1\FaithMiApplication1\bin\Release\net5.0\publish\</_PublishTargetUrl>
+    <History>True|2022-05-05T06:51:47.4613451Z;True|2022-05-05T14:50:42.8103307+08:00;</History>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="Database">
+      <Value>Server=112.124.10.13%3bUser Id=root%3bPassword=xyf12138%3bDatabase=faithdb%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

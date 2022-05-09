@@ -155,6 +155,14 @@ namespace FaithMiApplication1
 
                 #endregion
             }
+            //启用静态文件
+            app.UseStaticFiles();
+            //这一步很关键
+            DefaultFilesOptions defaultFilesOptions = new DefaultFilesOptions();
+            defaultFilesOptions.DefaultFileNames.Clear();
+            //设置首页，我希望用户打开`localhost`访问到的是`wwwroot`下的Index.html文件
+            defaultFilesOptions.DefaultFileNames.Add("index.html");
+            app.UseDefaultFiles(defaultFilesOptions);
         }
     }
 }

@@ -42,6 +42,7 @@ namespace faithTest
             }*/
             string value = faith.a.ToString();
             Console.WriteLine(value);
+            //获取本机域名
 
         }
         public enum faith { 

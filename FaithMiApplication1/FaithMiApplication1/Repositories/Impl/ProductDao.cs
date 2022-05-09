@@ -52,13 +52,14 @@ namespace FaithMiApplication1.Repositories
                 return await _faithdbContext.Products.ToArrayAsync();
             }
             MySqlParameter[] sqlparment = new MySqlParameter[] { new MySqlParameter("@TestName", name) };
-            FormattableString fstr = $@"SELECT p.product_id,p.product_title,p.product_intro,p.product_picture,p.product_price,c.category_id,p.product_name,p.product_num,p.product_selling_price,p.product_sales
-                            from product p 
-                            LEFT JOIN 
-                            category c 
-                            ON p.category_id =c.category_id 
-                            WHERE c.category_name=@TestName
-                            LIMIT 0,9";
+            FormattableString fstr = $@"SELECT p.product_id,p.product_title,p.product_intro,p.product_picture,p.product_price,
+                                       c.category_id,p.product_name,p.product_num,p.product_selling_price,p.product_sales
+                                        from product p 
+                                        LEFT JOIN 
+                                        category c 
+                                        ON p.category_id =c.category_id 
+                                        WHERE c.category_name=@TestName
+                                        LIMIT 0,9";
             return await _faithdbContext.Products.FromSqlRaw(fstr.ToString(), sqlparment).ToListAsync();
         }
         /// <summary>
@@ -81,13 +82,14 @@ namespace FaithMiApplication1.Repositories
                 new MySqlParameter("@pageStr", (page.pageNum-1)*page.pageSize),
                 new MySqlParameter("@pageLimit",page.pageSize),
              };
-            FormattableString fstr = $@"SELECT p.product_id,p.product_title,p.product_intro,p.product_picture,p.product_price,c.category_id,p.product_name,p.product_num,p.product_selling_price,p.product_sales
-                            from product p 
-                            LEFT JOIN 
-                            category c 
-                            ON p.category_id =c.category_id 
-                            WHERE c.category_name=@TestName
-                            LIMIT @pageStr,@pageLimit";
+            FormattableString fstr = $@"SELECT p.product_id,p.product_title,p.product_intro,p.product_picture,p.product_price,
+                                      c.category_id,p.product_name,p.product_num,p.product_selling_price,p.product_sales
+                                    from product p 
+                                    LEFT JOIN 
+                                    category c 
+                                    ON p.category_id =c.category_id 
+                                    WHERE c.category_name=@TestName
+                                    LIMIT @pageStr,@pageLimit";
             var list = await _faithdbContext.Products.FromSqlRaw(fstr.ToString(), sqlparment).ToListAsync();
             int num = list.Count;
             var selectCount = _faithdbContext.Products.Include(c => c.Category).Where(c => c.Category.CategoryName == page.name).Count();

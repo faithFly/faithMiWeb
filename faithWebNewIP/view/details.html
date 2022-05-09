@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品信息</title>
+            <!-- 引入 layui.css -->
+            <link rel="stylesheet" href="../css/layui.css">
+            <!-- 引入 layui.js -->
+            <script src="../js/layui.js"></script>
+            <link rel="stylesheet" href="../css/details.css">
+            <script src="../js/jq1.10.2.js"></script>
+           <script src="../js/details.js"></script>
+</head>
+<body>
+  <div>
+    <div class="boxMax">
+      <!-- 顶部 -->
+      <div class="topbar">
+        <div class="topbar_nav">
+          <div class="topbar_left">
+            <a href="">小米商城</a>  
+            <span class="sep">|</span>
+            <a href="">MIUI</a>  
+            <span class="sep">|</span>
+            <a href="">loT</a>  
+            <span class="sep">|</span>
+            <a href="">云服务</a>  
+            <span class="sep">|</span>
+            <a href="">天星数科</a>  
+            <span class="sep">|</span>
+            <a href="">有品</a>  
+            <span class="sep">|</span>
+            <a href="">小爱开放平台</a>  
+          </div>
+          <div class="topbar_user" id="topbar_changeA">
+           
+            <a href="../view/login.html">登录</a>  
+    
+            <span class="sep">|</span>
+    
+            <a href="../view/login.html">注册</a>
+            <a></a>
+            <span class="sep">|</span>
+    
+            <a href="">消息通知</a>
+    
+            <em class="shopping_a">
+            <em class="icon_shop"></em>
+            <em class="icon_txt">购物车</em>
+            </em>
+          </div>
+           </div>
+           
+    </div>
+    <!-- 搜索框栏目 -->
+    <div class="search_nav">
+      <div class="search_con">
+        <img src="../img/logo.jpg" width="110" height="100">
+        <ul>
+          <li><a href="../view/main.html">首页</a> </li>
+          <li><a href="../view/goods.html">全部商品</a> </li>
+          <li><a>关于我们</a> </li>
+        </ul>
+        
+      
+        <div class="search_right">
+        
+        <input type="text" name="search" id="txt_search" placeholder="请输入你要查找的商品">
+        <button class="search_btn">搜索</button>
+        
+        </div>
+        </div>
+          
+        </div>
+      </div>
+    </div>
+    <div class="details_main">
+      <div class="pageHead">
+          <div class="title">
+              <p id="phoneTitle">RedMi Note5</p>
+              <a id="pid" style="display: none;"></a>
+          </div>
+      </div>
+       <div class="main">
+         <div class="main_left">
+          <div class="layui-carousel main_left" id="rotationMap">
+            <div carousel-item id="imgChange">
+            
+            </div>
+          </div>
+         </div>
+       
+        <!--右侧-->
+        <div class="main_right">
+              <h1 class="prod_name"></h1>
+              <p class="intro"></p>
+              <p class="store">小米自营</p>
+             <div class="price">
+              <a></a>
+             </div>
+             <div class="pro_list">
+              <span class="pro_name">
+              </span>
+              <span class="pro_price">
+                <a></a>
+              </span> 
+              <p class="price_sum"></p>
+             </div>
+            <div class="div_button">
+              <button class="layui-btn layui-btn-radius layui-btn-warm left_btn" id="addBtn">加入购物车</button>
+              <button class="layui-btn layui-btn-radius right_btn">不喜欢</button>
+            </div>
+            <div class="pro_policy">
+              <ul>
+                <li>
+                    <i class="layui-icon  layui-icon-ok-circle"></i>
+                  <span>小米自营</span>  
+                  </li>
+                <li>
+                  <i class="layui-icon  layui-icon-ok-circle"></i>
+                  <span>京东发货</span> 
+                </li>
+              <li>
+                <i class="layui-icon  layui-icon-ok-circle"></i>
+                <span>7天无理由退换</span> 
+              </li>
+              </ul>
+            </div>
+        </div>
+       </div>
+    </div>
+        <div class="main_bottom">
+          <a>商城版权所有归faith说了算嘿嘿</a>
+        </div>
+  </div>
+</div>
+
+</body>
+</html>
