@@ -5,6 +5,7 @@ using FaithMiApplication1.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using StackExchange.Redis;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -21,10 +22,18 @@ namespace FaithMiApplication1.Controllers
         // 连接Redis客户端
         RedisHelper redisHelper = new RedisHelper("127.0.0.1:6379");
         Result result = null;
-        public AuthorizeController(IOptions<JwtSettings> _jwtSettingsAccesser, IUsersRepository usersRepository)
+        private readonly RedisConfig _redisConfig;
+        private ConnectionMultiplexer redisMultiplexer;
+        IDatabase db = null;
+        public AuthorizeController(IOptions<JwtSettings> _jwtSettingsAccesser, IUsersRepository usersRepository, IOptionsMonitor<RedisConfig> optionsSnapshot)
         {
             _usersRepository = usersRepository;
             _jwtSettings = _jwtSettingsAccesser.Value;
+            //依赖注入redis
+            _redisConfig = optionsSnapshot.CurrentValue;
+            var RedisConnection = _redisConfig.Value;
+            redisMultiplexer = ConnectionMultiplexer.Connect(RedisConnection);
+            db = redisMultiplexer.GetDatabase();
         }
         /// <summary>
         /// 授权登录
@@ -64,11 +73,18 @@ namespace FaithMiApplication1.Controllers
                             signingCredentials: creds);
                         if (token!=null)
                         {
-                            bool isInsertSucc = redisHelper.SetValue("token", token.ToString());
+                            bool isInsertNew = db.StringSet("tokenNew",token.ToString());
+                            if (isInsertNew)
+                            {
+                                info = db.StringGet("tokenNew");
+
+                            }
+                            //使用redisHelper类
+                            /*bool isInsertSucc = redisHelper.SetValue("token", token.ToString());
                             if (isInsertSucc) {
                                 info = redisHelper.GetValue("token");
                                 
-                            }
+                            }*/
                         }
                         return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token), id = users.UserId ,name=users.UserName,redis=info});
                         }

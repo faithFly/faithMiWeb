@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Newtonsoft.Json;
 using FaithMiApplication1.Repositories.Dao;
 using FaithMiApplication1.Repositories.Impl;
+using FaithMiApplication1.Redis;
 
 namespace FaithMiApplication1
 {
@@ -118,6 +119,10 @@ namespace FaithMiApplication1
                    );
 
             services.AddMvc();
+            services.Configure<RedisConfig>(
+                Configuration.GetSection("RedisConnectionString")
+                );
+            services.AddSingleton<RedisString>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
