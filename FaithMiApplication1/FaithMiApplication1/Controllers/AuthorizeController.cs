@@ -1,5 +1,6 @@
 ﻿using FaithMiApplication1.Jwt;
 using FaithMiApplication1.Models;
+using FaithMiApplication1.Redis;
 using FaithMiApplication1.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -17,7 +18,9 @@ namespace FaithMiApplication1.Controllers
     {
         private JwtSettings _jwtSettings;
         private readonly IUsersRepository _usersRepository;
-
+        // 连接Redis客户端
+        RedisHelper redisHelper = new RedisHelper("127.0.0.1:6379");
+        Result result = null;
         public AuthorizeController(IOptions<JwtSettings> _jwtSettingsAccesser, IUsersRepository usersRepository)
         {
             _usersRepository = usersRepository;
@@ -34,7 +37,7 @@ namespace FaithMiApplication1.Controllers
             try
             {
                 var users = await _usersRepository.LogingUser(viewModel.UserName, viewModel.Password);
-           
+                var info="";
                 //
                 if (ModelState.IsValid)//判断是否合法
                 {
@@ -59,7 +62,15 @@ namespace FaithMiApplication1.Controllers
                             claims: claims,
                             expires: DateTime.Now.AddMinutes(30),
                             signingCredentials: creds);
-                        return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token), id = users.UserId ,name=users.UserName});
+                        if (token!=null)
+                        {
+                            bool isInsertSucc = redisHelper.SetValue("token", token.ToString());
+                            if (isInsertSucc) {
+                                info = redisHelper.GetValue("token");
+                                
+                            }
+                        }
+                        return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token), id = users.UserId ,name=users.UserName,redis=info});
                         }
                     
                 }

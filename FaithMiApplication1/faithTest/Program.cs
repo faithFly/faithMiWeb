@@ -43,7 +43,9 @@ namespace faithTest
             string value = faith.a.ToString();
             Console.WriteLine(value);
             //获取本机域名
-
+            decimal a = 1;
+            decimal b = 1;
+            Console.WriteLine(a * (1 + b * (decimal)0.01));
         }
         public enum faith { 
             a,

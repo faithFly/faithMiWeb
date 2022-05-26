@@ -1,58 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-        <!-- 引入 layui.css -->
-        <link rel="stylesheet" href="../css/layui.css">
-        <!-- 引入 layui.js -->
-        <script src="../js/layui.js"></script>
-        <script src="../js/jq1.10.2.js"></script>
-  
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/jq1.10.2.js"></script>
 </head>
 <body>
-  <table id="demo" lay-filter="test"></table>
-  <script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-      <button class="layui-btn layui-btn-sm" lay-event="delete">删除</button>
-    </div>
-  </script>
+  下拉框：
+  <select id="ContractStatus" name="ContractStatus">
+    <option value="1111">请选择</option>
+    <option value="未签署">未签署</option>
+    <option value="签署中">签署中</option>
+    <option value="已签署">已签署</option>
+</select>
 </body>
-<script> 
-$(function(){
-        var arr={
-          id:"1",
-          userName:"faith"
-        }
-        layui.use('table', function(){
-        var table = layui.table;
-        table.render({
-          elem:'#demo',
-          data:arr,
-          toolbar: '#toolbarDemo',
-          cols: [[
-            {field:'id', title:'ID', width:100},
-            {field:'userName', title:'名字', width:100}
-            ,{fixed: 'right', width:150, align:'center', toolbar: '#barDemo'} //这里的toolbar值是模板元素的选择器
-          ]]
-        });
-                //触发事件
-        table.on('toolbar(test)', function(obj){
-          var checkStatus = table.checkStatus(obj.config.id);
-          switch(obj.event){
-            case 'delete':
-              layer.msg('删除');
-            break;
-          
-          };
-        });
-        })
-});
-
-
-
-
-</script>
 </html>
